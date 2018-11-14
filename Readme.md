@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Удод](https://up.htmlacademy.ru/javascript/16/user/523387).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Чудновский](https://github.com/gallun320)
 
 ---
 
