@@ -116,7 +116,7 @@ var renderBigFoto = function (bigFoto) {
 
 var createBigFoto = function() {
 	var finalBigFotos = createItemsObject(); //вызвали создание элемента
-	var essentialBigFoto = renderBigFoto(finalBigFotos[0]) //закинули данные 1-го элемета массива в создание большой фотки
+	var essentialBigFoto = renderBigFoto(finalBigFotos[0]); //закинули данные 1-го элемета массива в создание большой фотки
 	return essentialBigFoto;
 };
 
