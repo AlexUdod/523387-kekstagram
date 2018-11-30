@@ -6,6 +6,10 @@ var COMMENTS_LIST = ['Всё отлично!', 'В целом всё непло�
 var DESCRIPTIONS_LIST = ['Тестим новую камеру!', 'Затусили с друзьями на море', 'Как же круто тут кормят', 
 'Отдыхаем...', 'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......', 
 'Вот это тачка!'];
+var FOTOS_EFFECTS = ['filter: grayscale(0..1)', 'filter: sepia(0..1)', 'filter: invert(0..100%)', 
+'filter: blur(0..3px)', 'filter: brightness(1..3)'];
+var FOTOS_EFFECTS_CLASSES = ['effects__preview--none', 'effects__preview--chrome', 'effects__preview--sepia', 
+'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
 
 var NUMBER_ITEMS = 25;
 var MIN_LIKES_NUMBER = 15;
@@ -14,6 +18,29 @@ var MIN_COMMENTS_NUMBER = 1;
 var MAX_COMMENTS_NUMBER = 2;
 var MIN_COMMENTS_AVATARS_NUMBER = 1;
 var MAX_COMMENTS_AVATARS_NUMBER = 6;
+
+var differentFotoTemplate = document.querySelector('#picture')
+    .content
+    .querySelector('.picture');
+
+var galleryContainer = document.querySelector('.pictures');
+var bigFotoContainer = document.querySelector('.big-picture');
+var bigPictureCancel = bigFotoContainer.querySelector('.big-picture__cancel');
+var imgFilters = document.querySelector('.img-filters');
+var imgUploadInput = document.querySelector('.img-upload__input');
+var imgUploadOverlay = document.querySelector('.img-upload__overlay');
+var imgUploadCancel = document.querySelector('.img-upload__cancel');
+var sliderEffectPin = document.querySelector('.effect-level__pin');
+var fotoEffectsList = document.querySelectorAll('.effects__preview');
+var bigFotoEffects = document.querySelector('.img-upload__preview');
+
+bigFotoContainer.classList.remove('hidden');
+
+var closebigPictureWindow = function () {
+	bigFotoContainer.classList.add('hidden');
+};
+
+bigPictureCancel.addEventListener('click', closebigPictureWindow);
 
 var generItemLikes = function (min, max) {
 	var randomLikesQuntity = Math.round(Math.random() * (max - min) + min);
@@ -72,13 +99,6 @@ var createItemsObject = function () {
 	return itemsObjectsList;
 }
 
-//  в переменную находим нужный темплэйт по идентификатору и в нем находим
-// франмент по классу куда будем вставлять новые эллементы
-var differentFotoTemplate = document.querySelector('#picture')
-    .content
-    .querySelector('.picture');
-
-var galleryContainer = document.querySelector('.pictures');
 
 // создаем фото
 var renderFotos = function (foto) {
@@ -100,9 +120,6 @@ var createFotosGallery = function () {
 };
 createFotosGallery();// вызвали функцию
 
-var bigFotoContainer = document.querySelector('.big-picture');
-bigFotoContainer.classList.remove('hidden');
-
 var renderBigFoto = function (bigFoto) {
 	var bigFototObject = bigFotoContainer;
 	bigFototObject.querySelector('.big-picture__img').src = 'img/logo-background-3.jpg';
@@ -120,10 +137,41 @@ var createBigFoto = function() {
 	return essentialBigFoto;
 };
 
-createBigFoto();
-
 var commentCountItem = document.querySelector('.social__comment-count');
 commentCountItem.classList.add('visually-hidden');
 
-var commentLoaderItem = document.querySelector('.comments-loade');
+var commentLoaderItem = document.querySelector('.comments-loader');
 commentLoaderItem.classList.add('visually-hidden');
+
+// ДЗ № 4
+
+var summonImgFiltersForm = function () {
+	imgFilters.classList.remove('img-filters--inactive');
+	imgUploadOverlay.classList.remove('hidden');	
+};
+
+imgUploadInput.addEventListener('change', summonImgFiltersForm);
+
+// ВЫБОР ОТТЕНКОВ ФОТО
+
+var addBigFotoEffects = function (smallFotoEffect, targetClass) {
+	smallFotoEffect.addEventListener('click', function () {
+		bigFotoEffects.classList.add(targetClass);
+	});
+};
+
+for (var i = 0; i < fotoEffectsList.length; i++) {
+	addBigFotoEffects(fotoEffectsList[i], FOTOS_EFFECTS_CLASSES[i]);
+};
+
+sliderEffectPin.addEventListener('mouseup' , function () {
+	bigFotoEffects.classList.add('effects__preview--heat');
+});
+
+var closeimgUploadWindow = function () {
+	imgUploadOverlay.classList.add('hidden');
+};
+
+imgUploadCancel.addEventListener('click', closeimgUploadWindow);
+
+createBigFoto();
