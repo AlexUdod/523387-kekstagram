@@ -8,8 +8,8 @@ var DESCRIPTIONS_LIST = ['Тестим новую камеру!', 'Затуси�
 'Вот это тачка!'];
 var FOTOS_EFFECTS = ['filter: grayscale(0..1)', 'filter: sepia(0..1)', 'filter: invert(0..100%)', 
 'filter: blur(0..3px)', 'filter: brightness(1..3)'];
-var FOTOS_EFFECTS_CLASSES = ['effects__preview--none', 'effects__preview--chrome', 'effects__preview--sepia', 
-'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
+// var FOTOS_EFFECTS_CLASSES = ['effects__preview--none', 'effects__preview--chrome', 'effects__preview--sepia', 
+// 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
 
 var NUMBER_ITEMS = 25;
 var MIN_LIKES_NUMBER = 15;
@@ -34,7 +34,7 @@ var sliderEffectPin = document.querySelector('.effect-level__pin');
 var fotoEffectsList = document.querySelectorAll('.effects__preview');
 var bigFotoEffects = document.querySelector('.img-upload__preview');
 
-bigFotoContainer.classList.remove('hidden');
+// bigFotoContainer.classList.remove('hidden');
 
 var closebigPictureWindow = function () {
 	bigFotoContainer.classList.add('hidden');
@@ -99,7 +99,6 @@ var createItemsObject = function () {
 	return itemsObjectsList;
 }
 
-
 // создаем фото
 var renderFotos = function (foto) {
 	var fotoObject = differentFotoTemplate.cloneNode(true); //даем добро на создание копий
@@ -122,13 +121,26 @@ createFotosGallery();// вызвали функцию
 
 var renderBigFoto = function (bigFoto) {
 	var bigFototObject = bigFotoContainer;
-	bigFototObject.querySelector('.big-picture__img').src = 'img/logo-background-3.jpg';
+	console.log(bigFototObject.querySelector('.big-picture__img').src = bigFoto.url);
 	bigFototObject.querySelector('.likes-count').textContent = bigFoto.likes;
 	bigFototObject.querySelector('.comments-count').textContent = bigFoto.commentsNumber;
 	bigFototObject.querySelector('.social__picture').src = bigFoto.bigFotoComments.commentAvatar;
 	bigFototObject.querySelector('.social__text').textContent = bigFoto.bigFotoComments.commentText;
 	bigFototObject.querySelector('.social__caption').textContent = bigFoto.description;
 	return bigFototObject;
+};
+
+// ВЫВОД ПО КЛИКУ БОЛЬШОЙ ФОТКИ
+
+var showBigPictureOnClick = function (choosenSmallPhoto) {
+	choosenSmallPhoto.addEventListener('click', function () {// кликаем по малой фотке
+		bigFotoContainer.classList.remove('hidden'); //отображение болшой (пофиг пока какой)
+		createBigFoto; //функция по созданию большой фотки
+	})
+};
+
+for (var j = 0; j < createItemsObject.length; j++) {
+	showBigPictureOnClick(createItemsObject[j]); // берем одну малую фотку из масива
 };
 
 var createBigFoto = function() {
@@ -154,18 +166,71 @@ imgUploadInput.addEventListener('change', summonImgFiltersForm);
 
 // ВЫБОР ОТТЕНКОВ ФОТО
 
-var addBigFotoEffects = function (smallFotoEffect, targetClass) {
+var addBigFotoEffects = function (smallFotoEffect) {
 	smallFotoEffect.addEventListener('click', function () {
-		bigFotoEffects.classList.add(targetClass);
+		if (bigFotoEffects.classList.length > 1) {
+			bigFotoEffects.classList.remove(bigFotoEffects.classList[1]);
+		}
+		bigFotoEffects.classList.add(smallFotoEffect.classList[1]);
 	});
 };
 
 for (var i = 0; i < fotoEffectsList.length; i++) {
-	addBigFotoEffects(fotoEffectsList[i], FOTOS_EFFECTS_CLASSES[i]);
+	addBigFotoEffects(fotoEffectsList[i]);
 };
 
-sliderEffectPin.addEventListener('mouseup' , function () {
-	bigFotoEffects.classList.add('effects__preview--heat');
+// ВЫБОР ОТТЕНКОВ ПО ШКАЛЕ
+var containerRangeEffectLevel = document.querySelector('.effect-level');
+var effectPhotoLevelInput = document.querySelector('.effect-level__value');
+var effectPhotoLevelLline = document.querySelector('.effect-level__line');
+
+sliderEffectPin.addEventListener('mousedown' , function (evt) {
+	evt.preventDefault();
+
+	var startCoords = {
+		x: evt.clietX,
+	};
+
+	var onMouseMove = function (moveEvt) {
+		moveEvt.preventDefault();
+		var pinBorder = sliderEffectPin.style.left - 'px';
+		var styleContainerRangeEffectLevel = getComputedStyle(containerRangeEffectLevel);
+		var width = styleContainerRangeEffectLevel.getPropertyValue('width');
+		var styleEffectPhotoLevelLline = getComputedStyle(effectPhotoLevelLline);
+		var marginRight = styleEffectPhotoLevelLline.getPropertyValue('right');
+		var marginLeft = styleEffectPhotoLevelLline.getPropertyValue('left');
+		var minPinPosition = 0;
+		var maxPinPosition = parseInt(width, 10) - parseInt(marginLeft, 10) - parseInt(marginRight, 10);
+		console.log(sliderEffectPin.style.left);
+
+		var shift = {
+			x: startCoords.x - moveEvt.clientX,
+		};
+
+		startCoords = {
+			x: moveEvt.clientX,
+		};
+
+		sliderEffectPin.style.left = (sliderEffectPin.offsetLeft - shift.x) + 'px';
+
+		if ((sliderEffectPin.offsetLeft - shift.x) < minPinPosition || 
+			(sliderEffectPin.offsetLeft - shift.x) > maxPinPosition) {
+			console.log(sliderEffectPin.style.left);
+			console.log('minPin   ' + minPinPosition);
+			console.log('maxPin   ' + maxPinPosition);
+			console.log('YES');
+			document.removeEventListener('mousemove', onMouseMove);
+		}
+  };
+
+  	var onMouseUp = function (upEvt) {
+  		upEvt.preventDefault();
+			document.removeEventListener('mousemove', onMouseMove);
+			document.removeEventListener('mouseup', onMouseUp); 		
+  };
+
+	document.addEventListener('mousemove', onMouseMove);
+	document.addEventListener('mouseup', onMouseUp);	
 });
 
 var closeimgUploadWindow = function () {
@@ -174,4 +239,4 @@ var closeimgUploadWindow = function () {
 
 imgUploadCancel.addEventListener('click', closeimgUploadWindow);
 
-createBigFoto();
+
