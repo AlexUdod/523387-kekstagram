@@ -6,6 +6,10 @@ var COMMENTS_LIST = ['Всё отлично!', 'В целом всё непло�
 var DESCRIPTIONS_LIST = ['Тестим новую камеру!', 'Затусили с друзьями на море', 'Как же круто тут кормят', 
 'Отдыхаем...', 'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......', 
 'Вот это тачка!'];
+var FOTOS_EFFECTS = ['filter: grayscale(0..1)', 'filter: sepia(0..1)', 'filter: invert(0..100%)', 
+'filter: blur(0..3px)', 'filter: brightness(1..3)'];
+// var FOTOS_EFFECTS_CLASSES = ['effects__preview--none', 'effects__preview--chrome', 'effects__preview--sepia', 
+// 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
 
 var NUMBER_ITEMS = 25;
 var MIN_LIKES_NUMBER = 15;
@@ -14,6 +18,32 @@ var MIN_COMMENTS_NUMBER = 1;
 var MAX_COMMENTS_NUMBER = 2;
 var MIN_COMMENTS_AVATARS_NUMBER = 1;
 var MAX_COMMENTS_AVATARS_NUMBER = 6;
+
+var differentFotoTemplate = document.querySelector('#picture')
+    .content
+    .querySelector('.picture');
+
+var galleryContainer = document.querySelector('.pictures');
+var bigFotoContainer = document.querySelector('.big-picture');
+var bigFotoContainerForImg = bigFotoContainer.querySelector('.big-picture__img');
+var bigFotoImg = bigFotoContainerForImg.querySelector('img');
+bigFotoImg.classList.add('big-picture__target-url');
+var bigPictureCancel = bigFotoContainer.querySelector('.big-picture__cancel');
+var imgFilters = document.querySelector('.img-filters');
+var imgUploadInput = document.querySelector('.img-upload__input');
+var imgUploadOverlay = document.querySelector('.img-upload__overlay');
+var imgUploadCancel = document.querySelector('.img-upload__cancel');
+var sliderEffectPin = document.querySelector('.effect-level__pin');
+var fotoEffectsList = document.querySelectorAll('.effects__preview');
+var bigFotoEffects = document.querySelector('.img-upload__preview');
+
+
+
+var closebigPictureWindow = function () {
+	bigFotoContainer.classList.add('hidden');
+};
+
+bigPictureCancel.addEventListener('click', closebigPictureWindow);
 
 var generItemLikes = function (min, max) {
 	var randomLikesQuntity = Math.round(Math.random() * (max - min) + min);
@@ -70,15 +100,7 @@ var createItemsObject = function () {
 		}
 	}
 	return itemsObjectsList;
-}
-
-//  в переменную находим нужный темплэйт по идентификатору и в нем находим
-// франмент по классу куда будем вставлять новые эллементы
-var differentFotoTemplate = document.querySelector('#picture')
-    .content
-    .querySelector('.picture');
-
-var galleryContainer = document.querySelector('.pictures');
+};
 
 // создаем фото
 var renderFotos = function (foto) {
@@ -100,12 +122,9 @@ var createFotosGallery = function () {
 };
 createFotosGallery();// вызвали функцию
 
-var bigFotoContainer = document.querySelector('.big-picture');
-bigFotoContainer.classList.remove('hidden');
-
 var renderBigFoto = function (bigFoto) {
 	var bigFototObject = bigFotoContainer;
-	bigFototObject.querySelector('.big-picture__img').src = 'img/logo-background-3.jpg';
+	// bigFototObject.querySelector('.big-picture__target-url').src = bigFoto.url;
 	bigFototObject.querySelector('.likes-count').textContent = bigFoto.likes;
 	bigFototObject.querySelector('.comments-count').textContent = bigFoto.commentsNumber;
 	bigFototObject.querySelector('.social__picture').src = bigFoto.bigFotoComments.commentAvatar;
@@ -114,16 +133,145 @@ var renderBigFoto = function (bigFoto) {
 	return bigFototObject;
 };
 
-var createBigFoto = function() {
-	var finalBigFotos = createItemsObject(); //вызвали создание элемента
-	var essentialBigFoto = renderBigFoto(finalBigFotos[0]); //закинули данные 1-го элемета массива в создание большой фотки
-	return essentialBigFoto;
+// ВЫВОД ПО КЛИКУ БОЛЬШОЙ ФОТКИ
+
+var newCreatedSmallFotos = document.querySelectorAll('.picture');
+var newCreatedSmallFotosImg = document.querySelectorAll('.picture__img');
+
+var showBigPictureOnClick = function (activeSmallFoto, imgUrl, bigPhoto) {
+	activeSmallFoto.addEventListener('click', function () {
+		bigFotoContainer.classList.remove('hidden');
+		bigFotoImg.src = imgUrl.src;
+		var essentialBigFoto = renderBigFoto(bigPhoto);
+	})
 };
 
-createBigFoto();
+var chooseSmallFotoForShowingBig = function () {
+	var finalBigFotos = createItemsObject();
+	for (var i = 0; i < newCreatedSmallFotos.length; i++) {
+		showBigPictureOnClick(newCreatedSmallFotos[i], newCreatedSmallFotosImg[i], finalBigFotos[i]);
+	}
+};
+chooseSmallFotoForShowingBig();
 
 var commentCountItem = document.querySelector('.social__comment-count');
 commentCountItem.classList.add('visually-hidden');
 
-var commentLoaderItem = document.querySelector('.comments-loade');
+var commentLoaderItem = document.querySelector('.comments-loader');
 commentLoaderItem.classList.add('visually-hidden');
+
+// ДЗ № 4
+
+var summonImgFiltersForm = function () {
+	imgFilters.classList.remove('img-filters--inactive');
+	imgUploadOverlay.classList.remove('hidden');	
+};
+
+imgUploadInput.addEventListener('change', summonImgFiltersForm);
+
+// ВЫБОР ОТТЕНКОВ ФОТО
+
+var addBigFotoEffects = function (smallFotoEffect) {
+	smallFotoEffect.addEventListener('click', function () {
+		if (bigFotoEffects.classList.length > 1) {
+			bigFotoEffects.classList.remove(bigFotoEffects.classList[1]);
+		}
+		bigFotoEffects.classList.add(smallFotoEffect.classList[1]);
+	});
+};
+
+var chooseSmallPhotoEffects = function () {
+	for (var i = 0; i < fotoEffectsList.length; i++) {
+		addBigFotoEffects(fotoEffectsList[i]);
+	}
+};
+
+chooseSmallPhotoEffects();
+
+// ВЫБОР ОТТЕНКОВ ПО ШКАЛЕ
+var containerRangeEffectLevel = document.querySelector('.effect-level');
+var effectPhotoLevelInput = document.querySelector('.effect-level__value');
+var effectPhotoLevelLline = document.querySelector('.effect-level__line');
+
+var styleContainerRangeEffectLevel = getComputedStyle(containerRangeEffectLevel);
+var width = styleContainerRangeEffectLevel.getPropertyValue('width');
+var styleEffectPhotoLevelLline = getComputedStyle(effectPhotoLevelLline);
+var marginRight = styleEffectPhotoLevelLline.getPropertyValue('right');
+var marginLeft = styleEffectPhotoLevelLline.getPropertyValue('left');
+var minPinPosition = 0;
+var maxPinPosition = parseInt(width, 10) - parseInt(marginLeft, 10) - parseInt(marginRight, 10);
+
+sliderEffectPin.addEventListener('mousedown' , function (evt) {
+	evt.preventDefault();
+
+	var startCoords = {
+		x: evt.clietX,
+	};
+
+	var onMouseMove = function (moveEvt) {
+		moveEvt.preventDefault();
+
+		var shift = {
+			x: startCoords.x - moveEvt.clientX,
+		};
+
+		startCoords = {
+			x: moveEvt.clientX,
+		};
+
+		sliderEffectPin.style.left = (sliderEffectPin.offsetLeft - shift.x) + 'px';
+		var currentPosition = (sliderEffectPin.offsetLeft - shift.x);		
+
+		if (currentPosition < minPinPosition || currentPosition > maxPinPosition) {
+			document.removeEventListener('mousemove', onMouseMove);
+		};
+
+		var addBigFotoEffectsFromScale = function () {
+			console.log(currentPosition);
+			console.log(calcScale());
+			var pointsScale = calcScale();
+			for (var i = 0; i < pointsScale.length; i++) {
+				if (currentPosition < pointsScale[i]) {
+					console.log('STOP  '  + pointsScale[i]);
+					console.log('EFFECT  '  + fotoEffectsList[i]);
+					// всавлю условие на присвоение эффекта большой фотке
+					if (bigFotoEffects.classList.length > 1) {
+						bigFotoEffects.classList.remove(bigFotoEffects.classList[1]);
+					}
+						bigFotoEffects.classList.add(fotoEffectsList[i].classList[1]);
+					break;					
+				}
+			}				
+		};
+		addBigFotoEffectsFromScale();
+
+  };
+
+  	var onMouseUp = function (upEvt) {
+  		upEvt.preventDefault();
+			document.removeEventListener('mousemove', onMouseMove);
+			document.removeEventListener('mouseup', onMouseUp); 		
+  };
+
+	document.addEventListener('mousemove', onMouseMove);
+	document.addEventListener('mouseup', onMouseUp);	
+});
+
+// Пропорция количества оттенков на шкале
+var calcScale = function() {
+	var point = 0;
+	var controlPoints = [];
+	for (var i = 0; i < fotoEffectsList.length; i++) {
+		point += Math.round(maxPinPosition / fotoEffectsList.length);
+		controlPoints[i] = point;
+	}
+	return controlPoints;
+};
+
+var closeimgUploadWindow = function () {
+	imgUploadOverlay.classList.add('hidden');
+};
+
+imgUploadCancel.addEventListener('click', closeimgUploadWindow);
+
+
