@@ -229,11 +229,16 @@ sliderEffectPin.addEventListener('mousedown' , function (evt) {
 		var addBigFotoEffectsFromScale = function () {
 			console.log(currentPosition);
 			console.log(calcScale());
-			for (var i = 0; i < calcScale.length; i++) {
-				if (currentPosition < calcScale[i]) {
-					console.log('STOP  '  + calcScale[i]);
+			var pointsScale = calcScale();
+			for (var i = 0; i < pointsScale.length; i++) {
+				if (currentPosition < pointsScale[i]) {
+					console.log('STOP  '  + pointsScale[i]);
 					console.log('EFFECT  '  + fotoEffectsList[i]);
 					// всавлю условие на присвоение эффекта большой фотке
+					if (bigFotoEffects.classList.length > 1) {
+						bigFotoEffects.classList.remove(bigFotoEffects.classList[1]);
+					}
+						bigFotoEffects.classList.add(fotoEffectsList[i].classList[1]);
 					break;					
 				}
 			}				
