@@ -25,6 +25,9 @@ var differentFotoTemplate = document.querySelector('#picture')
 
 var galleryContainer = document.querySelector('.pictures');
 var bigFotoContainer = document.querySelector('.big-picture');
+var bigFotoContainerForImg = bigFotoContainer.querySelector('.big-picture__img');
+var bigFotoImg = bigFotoContainerForImg.querySelector('img');
+bigFotoImg.classList.add('big-picture__target-url');
 var bigPictureCancel = bigFotoContainer.querySelector('.big-picture__cancel');
 var imgFilters = document.querySelector('.img-filters');
 var imgUploadInput = document.querySelector('.img-upload__input');
@@ -34,7 +37,7 @@ var sliderEffectPin = document.querySelector('.effect-level__pin');
 var fotoEffectsList = document.querySelectorAll('.effects__preview');
 var bigFotoEffects = document.querySelector('.img-upload__preview');
 
-// bigFotoContainer.classList.remove('hidden');
+
 
 var closebigPictureWindow = function () {
 	bigFotoContainer.classList.add('hidden');
@@ -97,7 +100,7 @@ var createItemsObject = function () {
 		}
 	}
 	return itemsObjectsList;
-}
+};
 
 // создаем фото
 var renderFotos = function (foto) {
@@ -121,7 +124,7 @@ createFotosGallery();// вызвали функцию
 
 var renderBigFoto = function (bigFoto) {
 	var bigFototObject = bigFotoContainer;
-	console.log(bigFototObject.querySelector('.big-picture__img').src = bigFoto.url);
+	// bigFototObject.querySelector('.big-picture__target-url').src = bigFoto.url;
 	bigFototObject.querySelector('.likes-count').textContent = bigFoto.likes;
 	bigFototObject.querySelector('.comments-count').textContent = bigFoto.commentsNumber;
 	bigFototObject.querySelector('.social__picture').src = bigFoto.bigFotoComments.commentAvatar;
@@ -132,22 +135,24 @@ var renderBigFoto = function (bigFoto) {
 
 // ВЫВОД ПО КЛИКУ БОЛЬШОЙ ФОТКИ
 
-var showBigPictureOnClick = function (choosenSmallPhoto) {
-	choosenSmallPhoto.addEventListener('click', function () {// кликаем по малой фотке
-		bigFotoContainer.classList.remove('hidden'); //отображение болшой (пофиг пока какой)
-		createBigFoto; //функция по созданию большой фотки
+var newCreatedSmallFotos = document.querySelectorAll('.picture');
+var newCreatedSmallFotosImg = document.querySelectorAll('.picture__img');
+
+var showBigPictureOnClick = function (activeSmallFoto, imgUrl, bigPhoto) {
+	activeSmallFoto.addEventListener('click', function () {
+		bigFotoContainer.classList.remove('hidden');
+		bigFotoImg.src = imgUrl.src;
+		var essentialBigFoto = renderBigFoto(bigPhoto);
 	})
 };
 
-for (var j = 0; j < createItemsObject.length; j++) {
-	showBigPictureOnClick(createItemsObject[j]); // берем одну малую фотку из масива
+var chooseSmallFotoForShowingBig = function () {
+	var finalBigFotos = createItemsObject();
+	for (var i = 0; i < newCreatedSmallFotos.length; i++) {
+		showBigPictureOnClick(newCreatedSmallFotos[i], newCreatedSmallFotosImg[i], finalBigFotos[i]);
+	}
 };
-
-var createBigFoto = function() {
-	var finalBigFotos = createItemsObject(); //вызвали создание элемента
-	var essentialBigFoto = renderBigFoto(finalBigFotos[0]); //закинули данные 1-го элемета массива в создание большой фотки
-	return essentialBigFoto;
-};
+chooseSmallFotoForShowingBig();
 
 var commentCountItem = document.querySelector('.social__comment-count');
 commentCountItem.classList.add('visually-hidden');
@@ -175,14 +180,26 @@ var addBigFotoEffects = function (smallFotoEffect) {
 	});
 };
 
-for (var i = 0; i < fotoEffectsList.length; i++) {
-	addBigFotoEffects(fotoEffectsList[i]);
+var chooseSmallPhotoEffects = function () {
+	for (var i = 0; i < fotoEffectsList.length; i++) {
+		addBigFotoEffects(fotoEffectsList[i]);
+	}
 };
+
+chooseSmallPhotoEffects();
 
 // ВЫБОР ОТТЕНКОВ ПО ШКАЛЕ
 var containerRangeEffectLevel = document.querySelector('.effect-level');
 var effectPhotoLevelInput = document.querySelector('.effect-level__value');
 var effectPhotoLevelLline = document.querySelector('.effect-level__line');
+
+var styleContainerRangeEffectLevel = getComputedStyle(containerRangeEffectLevel);
+var width = styleContainerRangeEffectLevel.getPropertyValue('width');
+var styleEffectPhotoLevelLline = getComputedStyle(effectPhotoLevelLline);
+var marginRight = styleEffectPhotoLevelLline.getPropertyValue('right');
+var marginLeft = styleEffectPhotoLevelLline.getPropertyValue('left');
+var minPinPosition = 0;
+var maxPinPosition = parseInt(width, 10) - parseInt(marginLeft, 10) - parseInt(marginRight, 10);
 
 sliderEffectPin.addEventListener('mousedown' , function (evt) {
 	evt.preventDefault();
@@ -193,15 +210,6 @@ sliderEffectPin.addEventListener('mousedown' , function (evt) {
 
 	var onMouseMove = function (moveEvt) {
 		moveEvt.preventDefault();
-		var pinBorder = sliderEffectPin.style.left - 'px';
-		var styleContainerRangeEffectLevel = getComputedStyle(containerRangeEffectLevel);
-		var width = styleContainerRangeEffectLevel.getPropertyValue('width');
-		var styleEffectPhotoLevelLline = getComputedStyle(effectPhotoLevelLline);
-		var marginRight = styleEffectPhotoLevelLline.getPropertyValue('right');
-		var marginLeft = styleEffectPhotoLevelLline.getPropertyValue('left');
-		var minPinPosition = 0;
-		var maxPinPosition = parseInt(width, 10) - parseInt(marginLeft, 10) - parseInt(marginRight, 10);
-		console.log(sliderEffectPin.style.left);
 
 		var shift = {
 			x: startCoords.x - moveEvt.clientX,
@@ -212,15 +220,26 @@ sliderEffectPin.addEventListener('mousedown' , function (evt) {
 		};
 
 		sliderEffectPin.style.left = (sliderEffectPin.offsetLeft - shift.x) + 'px';
+		var currentPosition = (sliderEffectPin.offsetLeft - shift.x);		
 
-		if ((sliderEffectPin.offsetLeft - shift.x) < minPinPosition || 
-			(sliderEffectPin.offsetLeft - shift.x) > maxPinPosition) {
-			console.log(sliderEffectPin.style.left);
-			console.log('minPin   ' + minPinPosition);
-			console.log('maxPin   ' + maxPinPosition);
-			console.log('YES');
+		if (currentPosition < minPinPosition || currentPosition > maxPinPosition) {
 			document.removeEventListener('mousemove', onMouseMove);
-		}
+		};
+
+		var addBigFotoEffectsFromScale = function () {
+			console.log(currentPosition);
+			console.log(calcScale());
+			for (var i = 0; i < calcScale.length; i++) {
+				if (currentPosition < calcScale[i]) {
+					console.log('STOP  '  + calcScale[i]);
+					console.log('EFFECT  '  + fotoEffectsList[i]);
+					// всавлю условие на присвоение эффекта большой фотке
+					break;					
+				}
+			}				
+		};
+		addBigFotoEffectsFromScale();
+
   };
 
   	var onMouseUp = function (upEvt) {
@@ -232,6 +251,17 @@ sliderEffectPin.addEventListener('mousedown' , function (evt) {
 	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);	
 });
+
+// Пропорция количества оттенков на шкале
+var calcScale = function() {
+	var point = 0;
+	var controlPoints = [];
+	for (var i = 0; i < fotoEffectsList.length; i++) {
+		point += Math.round(maxPinPosition / fotoEffectsList.length);
+		controlPoints[i] = point;
+	}
+	return controlPoints;
+};
 
 var closeimgUploadWindow = function () {
 	imgUploadOverlay.classList.add('hidden');
