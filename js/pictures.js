@@ -311,7 +311,6 @@ inputHashtags.addEventListener('input', function (evt) {
       	target.setCustomValidity('Oдин и тот же хэш-тег не может быть использован дважды');
       break;
     }
-
   }
 	  if (itemsMassiv.length > 5) {
 	    target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
@@ -329,24 +328,12 @@ var createMassivFromInputHashtags = function () {
 	return massivFromInputHashtags;
 };
 
-// var verifyInputConditions = function () {
-// 	var items = createMassivFromInputHashtags();
-// 	if (items.length > 6) {
-
-// 	}
-
-// };
-
 var createMassivOnChange = function () {
 	inputHashtags.addEventListener('change', createMassivFromInputHashtags);
 };
 
-// var checkOddConditioninputHashtags = function () {
-// 	inputHashtags.addEventListener('change', verifyInputConditions);
-// };
-
 createMassivOnChange();
-// checkOddConditioninputHashtags();
+
 
 
 
