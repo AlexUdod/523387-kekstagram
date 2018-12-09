@@ -294,30 +294,43 @@ inputHashtags.addEventListener('invalid', function (evt) {
 		inputHashtags.setCustomValidity('Имя не должно превышать 105-ти символов');
 	} else if (inputHashtags.validity.valueMissing) {
 		inputHashtags.setCustomValidity('Обязательное поле');
-	} 
-	// else 
-	//   	inputHashtags.setCustomValidity('');
-	//   }
+	} else if (inputHashtags.validity.customError) {
+		inputHashtags.setCustomValidity(inputHashtags.validationMessage);
+	}	else {
+	  inputHashtags.setCustomValidity('');
+	}
 });
 
 inputHashtags.addEventListener('input', function (evt) {
   var target = evt.target;
   var itemsMassiv = createMassivFromInputHashtags();
-  var mirrorMassiv = [];
+  var condition = createMirrorMassiveHashtags();
   for (var i = 0; i < itemsMassiv.length; i++) {  	
     if (itemsMassiv.length > 5) {
 	    target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
 	  } else if (itemsMassiv[i].length < 2 || itemsMassiv[i].length > 20) {
 	  	target.setCustomValidity('Xеш-тег не может состоять только из одной решётки, максимальная длина одного хэш-тега 20 символов, включая решётку');
-	  } else if (mirrorMassiv.indexOf(itemsMassiv[i]) === -1){
-    	mirrorMassiv.push(itemsMassiv[i]);
-    } else if (mirrorMassiv.indexOf(itemsMassiv[i]) > -1) {
+	  } else if (condition === true) {
       target.setCustomValidity('Oдин и тот же хэш-тег не может быть использован дважды');
     }	else {
 	  	target.setCustomValidity('');
 	  }
   }
 });
+
+var createMirrorMassiveHashtags = function () {
+	var itemsMassiv = createMassivFromInputHashtags();
+	var mirrorMassiv = [];
+	var condition = false;
+	for (var i = 0; i < itemsMassiv.length; i++) {
+		if (mirrorMassiv.indexOf(itemsMassiv[i]) === -1) {
+			mirrorMassiv.push(itemsMassiv[i]);
+		} else {
+			condition = true;
+		}
+	}
+	return condition;
+};
 
 var createMassivFromInputHashtags = function () {
 	var massivFromInputHashtags = inputHashtags.value.split(' ');
