@@ -185,12 +185,14 @@ chooseSmallPhotoEffects();
 var containerRangeEffectLevel = document.querySelector('.effect-level');
 var effectPhotoLevelInput = document.querySelector('.effect-level__value');
 var effectPhotoLevelLline = document.querySelector('.effect-level__line');
+var scaleLine = document.querySelector('.effect-level__depth');
 
 var styleContainerRangeEffectLevel = getComputedStyle(containerRangeEffectLevel);
 var width = styleContainerRangeEffectLevel.getPropertyValue('width');
 var styleEffectPhotoLevelLline = getComputedStyle(effectPhotoLevelLline);
 var marginRight = styleEffectPhotoLevelLline.getPropertyValue('right');
 var marginLeft = styleEffectPhotoLevelLline.getPropertyValue('left');
+
 var minPinPosition = 0;
 var maxPinPosition = parseInt(width, 10) - parseInt(marginLeft, 10) - parseInt(marginRight, 10);
 
@@ -213,7 +215,9 @@ sliderEffectPin.addEventListener('mousedown' , function (evt) {
 		};
 
 		sliderEffectPin.style.left = (sliderEffectPin.offsetLeft - shift.x) + 'px';
-		var currentPosition = (sliderEffectPin.offsetLeft - shift.x);		
+		var currentPosition = (sliderEffectPin.offsetLeft - shift.x);
+
+		scaleLine.style.width = (sliderEffectPin.offsetLeft - shift.x) + 'px';
 
 		if (currentPosition < minPinPosition || currentPosition > maxPinPosition) {
 			document.removeEventListener('mousemove', onMouseMove);
