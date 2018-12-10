@@ -6,8 +6,6 @@ var COMMENTS_LIST = ['Всё отлично!', 'В целом всё непло�
 var DESCRIPTIONS_LIST = ['Тестим новую камеру!', 'Затусили с друзьями на море', 'Как же круто тут кормят', 
 'Отдыхаем...', 'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......', 
 'Вот это тачка!'];
-var FOTOS_EFFECTS = ['filter: grayscale(0..1)', 'filter: sepia(0..1)', 'filter: invert(0..100%)', 
-'filter: blur(0..3px)', 'filter: brightness(1..3)'];
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
@@ -24,11 +22,13 @@ var differentFotoTemplate = document.querySelector('#picture')
     .querySelector('.picture');
 
 var galleryContainer = document.querySelector('.pictures');
-var bigFotoContainer = document.querySelector('.big-picture');
-var bigFotoContainerForImg = bigFotoContainer.querySelector('.big-picture__img');
-var bigFotoImg = bigFotoContainerForImg.querySelector('img');
-bigFotoImg.classList.add('big-picture__target-url');
-var bigPictureCancel = bigFotoContainer.querySelector('.big-picture__cancel');
+
+// var bigFotoContainer = document.querySelector('.big-picture');
+// var bigFotoContainerForImg = bigFotoContainer.querySelector('.big-picture__img');
+// var bigFotoImg = bigFotoContainerForImg.querySelector('img');
+// bigFotoImg.classList.add('big-picture__target-url');
+// var bigPictureCancel = bigFotoContainer.querySelector('.big-picture__cancel');
+
 var imgFilters = document.querySelector('.img-filters');
 var imgUploadInput = document.querySelector('.img-upload__input');
 var imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -39,11 +39,11 @@ var bigFotoEffects = document.querySelector('.img-upload__preview');
 
 
 
-var closebigPictureWindow = function () {
-	bigFotoContainer.classList.add('hidden');
-};
+// var closebigPictureWindow = function () {
+// 	bigFotoContainer.classList.add('hidden');
+// };
 
-bigPictureCancel.addEventListener('click', closebigPictureWindow);
+// bigPictureCancel.addEventListener('click', closebigPictureWindow);
 
 var generItemLikes = function (min, max) {
 	var randomLikesQuntity = Math.round(Math.random() * (max - min) + min);
@@ -113,52 +113,51 @@ var renderFotos = function (foto) {
 
 // создаем всю галлерею
 var createFotosGallery = function () {
-	var finalFotos = createItemsObject(); //подтянули создание обьекта массива
-	var fragment = document.createDocumentFragment(); //обернули для единоразовой отрисовки браузером
+	var finalFotos = createItemsObject();
+	var fragment = document.createDocumentFragment(); 
 	for (var i = 0; i < finalFotos.length; i++) {
-		fragment.appendChild(renderFotos(finalFotos[i]));//создали и вставили элемент в массив		
+		fragment.appendChild(renderFotos(finalFotos[i]));		
 	}
-	galleryContainer.appendChild(fragment);// вставили элемент в разметку
+	galleryContainer.appendChild(fragment);
 };
-createFotosGallery();// вызвали функцию
+createFotosGallery();
 
-var renderBigFoto = function (bigFoto) {
-	var bigFototObject = bigFotoContainer;
-	// bigFototObject.querySelector('.big-picture__target-url').src = bigFoto.url;
-	bigFototObject.querySelector('.likes-count').textContent = bigFoto.likes;
-	bigFototObject.querySelector('.comments-count').textContent = bigFoto.commentsNumber;
-	bigFototObject.querySelector('.social__picture').src = bigFoto.bigFotoComments.commentAvatar;
-	bigFototObject.querySelector('.social__text').textContent = bigFoto.bigFotoComments.commentText;
-	bigFototObject.querySelector('.social__caption').textContent = bigFoto.description;
-	return bigFototObject;
-};
+// var renderBigFoto = function (bigFoto) {
+// 	var bigFototObject = bigFotoContainer;
+// 	bigFototObject.querySelector('.likes-count').textContent = bigFoto.likes;
+// 	bigFototObject.querySelector('.comments-count').textContent = bigFoto.commentsNumber;
+// 	bigFototObject.querySelector('.social__picture').src = bigFoto.bigFotoComments.commentAvatar;
+// 	bigFototObject.querySelector('.social__text').textContent = bigFoto.bigFotoComments.commentText;
+// 	bigFototObject.querySelector('.social__caption').textContent = bigFoto.description;
+// 	return bigFototObject;
+// };
 
 // ВЫВОД ПО КЛИКУ БОЛЬШОЙ ФОТКИ
 
-var newCreatedSmallFotos = document.querySelectorAll('.picture');
-var newCreatedSmallFotosImg = document.querySelectorAll('.picture__img');
+// var newCreatedSmallFotos = document.querySelectorAll('.picture');
+// var newCreatedSmallFotosImg = document.querySelectorAll('.picture__img');
 
-var showBigPictureOnClick = function (activeSmallFoto, imgUrl, bigPhoto) {
-	activeSmallFoto.addEventListener('click', function () {
-		bigFotoContainer.classList.remove('hidden');
-		bigFotoImg.src = imgUrl.src;
-		var essentialBigFoto = renderBigFoto(bigPhoto);
-	})
-};
+// var showBigPictureOnClick = function (activeSmallFoto, imgUrl, bigPhoto) {
+// 	activeSmallFoto.addEventListener('click', function () {
+// 		bigFotoContainer.classList.remove('hidden');
+// 		bigFotoImg.src = imgUrl.src;
+// 		var essentialBigFoto = renderBigFoto(bigPhoto);
+// 	})
+// };
 
-var chooseSmallFotoForShowingBig = function () {
-	var finalBigFotos = createItemsObject();
-	for (var i = 0; i < newCreatedSmallFotos.length; i++) {
-		showBigPictureOnClick(newCreatedSmallFotos[i], newCreatedSmallFotosImg[i], finalBigFotos[i]);
-	}
-};
-chooseSmallFotoForShowingBig();
+// var chooseSmallFotoForShowingBig = function () {
+// 	var finalBigFotos = createItemsObject();
+// 	for (var i = 0; i < newCreatedSmallFotos.length; i++) {
+// 		showBigPictureOnClick(newCreatedSmallFotos[i], newCreatedSmallFotosImg[i], finalBigFotos[i]);
+// 	}
+// };
+// chooseSmallFotoForShowingBig();
 
-var commentCountItem = document.querySelector('.social__comment-count');
-commentCountItem.classList.add('visually-hidden');
+// var commentCountItem = document.querySelector('.social__comment-count');
+// commentCountItem.classList.add('visually-hidden');
 
-var commentLoaderItem = document.querySelector('.comments-loader');
-commentLoaderItem.classList.add('visually-hidden');
+// var commentLoaderItem = document.querySelector('.comments-loader');
+// commentLoaderItem.classList.add('visually-hidden');
 
 // ДЗ № 4
 
