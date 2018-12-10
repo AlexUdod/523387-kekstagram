@@ -29,7 +29,7 @@ var showBigPictureOnClick = function (activeSmallFoto, imgUrl, bigPhoto) {
 	activeSmallFoto.addEventListener('click', function () {
 		bigFotoContainer.classList.remove('hidden');
 		bigFotoImg.src = imgUrl.src;
-		var essentialBigFoto = renderBigFoto(bigPhoto);
+		renderBigFoto(bigPhoto);
 	})
 };
 

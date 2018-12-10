@@ -9,7 +9,6 @@
 	var fotoEffectsList = document.querySelectorAll('.effects__preview');
 	var bigFotoEffects = document.querySelector('.img-upload__preview');
 	var containerRangeEffectLevel = document.querySelector('.effect-level');
-	var effectPhotoLevelInput = document.querySelector('.effect-level__value');
 	var effectPhotoLevelLline = document.querySelector('.effect-level__line');
 	var scaleLine = document.querySelector('.effect-level__depth');
 
@@ -40,7 +39,7 @@
 	chooseSmallPhotoEffects();
 
 // ВЫБОР ОТТЕНКОВ ПО ШКАЛЕ
-	sliderEffectPin.addEventListener('mousedown' , function (evt) {
+	sliderEffectPin.addEventListener('mousedown', function (evt) {
 	evt.preventDefault();
 
 		var startCoords = {
@@ -64,7 +63,7 @@
 
 			if (currentPosition < minPinPosition || currentPosition > maxPinPosition) {
 				document.removeEventListener('mousemove', onMouseMove);
-			};
+			}
 
 			var addBigFotoEffectsFromScale = function () {
 				var pointsScale = calcScale();
@@ -107,7 +106,7 @@
 			window.form.inputTextDescription === document.activeElement) {
 			return;
 		} 
-		if (evt.keyCode === ESC_KEYCODE) {
+		if (evt.keyCode === window.data.ESC_KEYCODE) {
 			closeImgUploadWindow();
 		}
 	};
@@ -115,7 +114,7 @@
 	var summonImgFiltersForm = function () {
 		imgFilters.classList.remove('img-filters--inactive');
 		imgUploadOverlay.classList.remove('hidden');
-		document.addEventListener('keydown', onPopupEscPress)
+		document.addEventListener('keydown', onPopupEscPress);
 	};
 
 	imgUploadInput.addEventListener('change', summonImgFiltersForm);

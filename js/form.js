@@ -65,5 +65,5 @@
 	window.form = {
 		inputHashtags: inputHashtags,
 		inputTextDescription: inputTextDescription
-	};
+	};	
 })();

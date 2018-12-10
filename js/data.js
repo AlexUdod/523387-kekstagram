@@ -11,7 +11,6 @@
 	'Вот это тачка!'];
 
 	var ESC_KEYCODE = 27;
-	var ENTER_KEYCODE = 13;
 	var NUMBER_ITEMS = 25;
 	var MIN_LIKES_NUMBER = 15;
 	var MAX_LIKES_NUMBER = 200;
@@ -72,12 +71,12 @@
 					},
 				description: generItemDescription()
 			}
-		}
+		};
 		return itemsObjectsList;
 	};
 
 	window.data = {
-		createItemsObject: createItemsObject()
+		createItemsObject: createItemsObject(),
+		ESC_KEYCODE: ESC_KEYCODE
 	};
-
 })();
