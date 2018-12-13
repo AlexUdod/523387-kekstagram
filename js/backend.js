@@ -1,49 +1,45 @@
 'use strict';
 
 (function () {
-	var xhr = new XMLHttpRequest ();
-	var request = new XMLHttpRequest ();
-	var imgUploadSubmit = document.querySelector('.img-upload__submit');
-	//необходимо установить соответствующий заголовок 
-	// и сериализовать данные с помощью метода JSON.stringify
-	var requestJson = JSON.stringify();
-	xhr.responseType = 'json';
+	window.loadData = function (url, onLoad, onError) {
+		var xhr = new XMLHttpRequest ();
+		xhr.responseType = 'json';
 
-	var onLoad = function (data) {
-		console.log(data);
+		xhr.addEventListener('load', function () {
+			if (xhr.status === 200) {
+				onLoad(xhr.response, window.createFotosGallery, window.chooseSmallFotoForShowingBig);
+			} else {
+			onError(observeErrors(xhr));
+			}
+		});
+
+		xhr.open('GET', url);
+		xhr.send();
 	};
 
-	var onError = function (message) {
-		console.error(message);
+	window.postData = function (url, onLoad, onError) {
+		var formElement = document.querySelector('.img-upload__form');
+		var imgUploadSubmit = document.querySelector('.img-upload__submit');
+
+		imgUploadSubmit.addEventListener('click', sendRequest);
+
+		var sendRequest = function (evt) {
+			evt.preventDefault();
+			var formData = new FormData(formElement);
+			var xhr = new XMLHttpRequest ();
+			xhr.open('POST', url);
+			xhr.onreadystatechange = function () {
+				if (xhr.status == 200){
+					onLoad(xhr.responseText);
+				}	else {
+					onError(observeErrors(xhr));
+				}
+			};
+			xhr.send(formData);
+		};
 	};
 
-	//срабатывает, когда сервер вернет запрос
-	xhr.addEventListener('load', function () {
-		if (xhr.status === 200) {
-			onLoad(xhr.response);
-		} else {
-			onError(observeErrors());
-		}
-	});
-
-	imgUploadSubmit.addEventListener('click', function () {
-		if (request.status === 200) {
-			onLoad(	request.onreadystatechange = function () {		
-				document.querySelector('.img-upload__form').innerHTML = request.responseText;
-			});
-		} else {
-			onError(observeErrors());
-		}
-	});
-
-	xhr.open('GET', 'https://js.dump.academy/kekstagram/data');
-	xhr.send();
-
-	request.open('POST', 'https://js.dump.academy/kekstagram');
-	request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-	request.send(requestJson);
-
-	var observeErrors = function () {
+	var observeErrors = function (xhr) {
 		var error;
 		switch(xhr.status) {
 			case 400:
@@ -55,15 +51,11 @@
 			case 404:
 				error = 'Nothing has been found' + ' ' + xhr.status;
 				break;
-			default:
-				error = 'Error number: ' + xhr.status + ' ' + xhr.statusText;
-		}
-		switch(request.status) {
 			case 500:
-				error = 'Remoute troubles' + ' ' + request.status;
+				error = 'Remoute troubles' + ' ' + xhr.status;
 				break;
 			default:
-				error = 'Error number: ' + request.status + ' ' + request.statusText;
+				error = 'Error number: ' + xhr.status + ' ' + xhr.statusText;
 		}
 		return error;
 	};

@@ -75,8 +75,16 @@
 		return itemsObjectsList;
 	};
 
+	
+
+	// var createItemsObject = function () {
+	// 	var itemsObjectsList = window.backend.onLoad;
+	// 	return itemsObjectsList;
+	// };
+
 	window.data = {
 		createItemsObject: createItemsObject(),
 		ESC_KEYCODE: ESC_KEYCODE
 	};
+
 })();

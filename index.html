@@ -121,7 +121,7 @@
                   <input class="text__hashtags" type="text" name="hashtags" placeholder="#хэш-тег" minlength="2" maxlength="105" required value="" pattern="^#[\w-]+(?:\s+#[\w-]+)*$">
                   <textarea class="text__description" type="text" name="description" placeholder="Ваш комментарий..." required></textarea>
                 </fieldset>
-
+                
                 <!-- Кнопка для отправки данных на сервер -->
                 <button type="submit" class="img-upload__submit" id="upload-submit">Опубликовать</button>
               </div>
@@ -236,11 +236,12 @@
   <template id="messages">
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
+<script src="js/backend.js"></script>
+<script src="js/handler.js"></script> 
 <script src="js/data.js"></script> 
 <script src="js/gallery.js"></script>
 <script src="js/big-foto.js"></script>
 <script src="js/picture-effects.js"></script>
 <script src="js/form.js"></script>
-<script src="js/backend.js"></script>
 </body>
 </html>
