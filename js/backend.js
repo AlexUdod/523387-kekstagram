@@ -7,7 +7,7 @@
 
 		xhr.addEventListener('load', function () {
 			if (xhr.status === 200) {
-				onLoad(xhr.response, window.createFotosGallery, window.chooseSmallFotoForShowingBig);
+				onLoad(xhr.response);
 			} else {
 			onError(observeErrors(xhr));
 			}
@@ -19,24 +19,23 @@
 
 	window.postData = function (url, onLoad, onError) {
 		var formElement = document.querySelector('.img-upload__form');
-		var imgUploadSubmit = document.querySelector('.img-upload__submit');
 
-		imgUploadSubmit.addEventListener('click', sendRequest);
+		formElement.addEventListener('submit', function (evt) {
+			var oData = new FormData(formElement);
 
-		var sendRequest = function (evt) {
-			evt.preventDefault();
-			var formData = new FormData(formElement);
-			var xhr = new XMLHttpRequest ();
+			var xhr = new XMLHttpRequest();
 			xhr.open('POST', url);
-			xhr.onreadystatechange = function () {
-				if (xhr.status == 200){
-					onLoad(xhr.responseText);
-				}	else {
+			xhr.onload = function (oEvent) {
+				if (xhr.status == 200) {
+					onLoad(xhr.response);
+				} else {
 					onError(observeErrors(xhr));
 				}
 			};
-			xhr.send(formData);
-		};
+
+			xhr.send(oData);
+			evt.preventDefault();
+		});
 	};
 
 	var observeErrors = function (xhr) {
@@ -59,6 +58,5 @@
 		}
 		return error;
 	};
-
 
 })();

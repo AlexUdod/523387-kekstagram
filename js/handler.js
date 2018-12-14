@@ -7,10 +7,10 @@
 		 .content
 		 .querySelector('.error');
 
-		var onLoad = function (data, createFotosGallery, chooseSmallFotoForShowingBig) {
+		var onLoad = function (data) {
 			console.log(data);
-			createFotosGallery(data);
-			chooseSmallFotoForShowingBig(data);
+			window.createFotosGallery(data);
+			window.chooseSmallFotoForShowingBig(data);
 		};
 
 		var onError = function (message) {
