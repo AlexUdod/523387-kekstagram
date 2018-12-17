@@ -79,4 +79,5 @@
 		createItemsObject: createItemsObject(),
 		ESC_KEYCODE: ESC_KEYCODE
 	};
+
 })();

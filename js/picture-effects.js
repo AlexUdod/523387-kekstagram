@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-	var imgFilters = document.querySelector('.img-filters');
 	var imgUploadInput = document.querySelector('.img-upload__input');
 	var imgUploadOverlay = document.querySelector('.img-upload__overlay');
 	var imgUploadCancel = document.querySelector('.img-upload__cancel');
@@ -112,7 +111,6 @@
 	};
 
 	var summonImgFiltersForm = function () {
-		imgFilters.classList.remove('img-filters--inactive');
 		imgUploadOverlay.classList.remove('hidden');
 		document.addEventListener('keydown', onPopupEscPress);
 	};
