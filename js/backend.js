@@ -19,7 +19,7 @@
 
 	window.postData = function (url, onLoad, onError, formElement) {
 
-		formElement.addEventListener('submit', function (evt) {
+		// formElement.addEventListener('submit', function (evt) {
 			var oData = new FormData(formElement);
 
 			var xhr = new XMLHttpRequest();
@@ -33,8 +33,8 @@
 			};
 
 			xhr.send(oData);
-			evt.preventDefault();
-		});
+			// evt.preventDefault();
+		// });
 	};
 
 	var observeErrors = function (xhr) {

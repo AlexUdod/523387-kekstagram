@@ -31,8 +31,7 @@
 			removeActiveClass();
 			deleteFotos();
 			filterPopular.classList.add('img-filters__button--active');
-
-			window.createFotosGallery(data);
+			window.debounce(window.createFotosGallery, data);
 			window.chooseSmallFotoForShowingBig(data);
 			
 		});
@@ -43,7 +42,7 @@
 			filterNew.classList.add('img-filters__button--active');
 			var randomMassiv = shuffle(dataCopy).slice(0, MAX__NEW__PHOTOS);
 
-			window.createFotosGallery(randomMassiv);
+			window.debounce(window.createFotosGallery, randomMassiv);
 			window.chooseSmallFotoForShowingBig(randomMassiv);
 			
 		});
@@ -63,7 +62,7 @@
 				return 0;			
 			});
 
-			window.createFotosGallery(dataCopy);
+			window.debounce(window.createFotosGallery, dataCopy);
 			window.chooseSmallFotoForShowingBig(dataCopy);
 			
 		});

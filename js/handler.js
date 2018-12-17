@@ -1,14 +1,15 @@
 'use strict';
 
 (function () {
-		var GET__URL = 'https://js.dump.academy/kekstagram/dat';
+		var GET__URL = 'https://js.dump.academy/kekstagram/data';
 		var POST__URL = 'https://js.dump.academy/kekstagram';
 
 		var mainContainer = document.querySelector('main');
 		var errorTemplate = document.querySelector('#error')
 		 .content
 		 .querySelector('.error');
-		var currentPostFormSubmit = document.querySelector('.img-upload__form');
+		var currentPostForm = document.querySelector('.img-upload__form');
+		var currentPostFormSubmit = document.querySelector('.img-upload__submit');
 
 		var onLoad = function (data) {
 			window.createFotosGallery(data);
@@ -27,6 +28,14 @@
 			onBtnCloseErrorWindow();
 			onBodyCloseErrorWindow();
 		};
+
+		var sendForm = function () {
+			currentPostFormSubmit.addEventListener('click', function (evt) {
+				evt.preventDefault();
+				window.postData(POST__URL, onLoad, onError, currentPostForm);
+			})
+		};
+		sendForm();
 
 		var closeErrorWindow = function () {
 			var errorWindow = document.querySelector('.error');
@@ -53,6 +62,5 @@
 		};
 
 		window.loadData(GET__URL, onLoad, onError);
-		window.postData(POST__URL, onLoad, onError, currentPostFormSubmit);
 
 })();
