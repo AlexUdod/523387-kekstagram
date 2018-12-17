@@ -5,7 +5,8 @@
 	var inputTextDescription = document.querySelector('.text__description');
 
 	inputHashtags.addEventListener('invalid', function (evt) {
-	 if (inputHashtags.validity.tooShort) {
+		inputHashtags.style.border = '2px solid red';
+	 	if (inputHashtags.validity.tooShort) {
 		inputHashtags.setCustomValidity('Хэш-тег должен состоять минимум из 2-х символов');
 		}	else if (inputHashtags.validity.patternMismatch) {
 		inputHashtags.setCustomValidity('Хэш-тег начинается с символа # (решётка) и разделяються пробелами, xеш-тег не может состоять только из одной решётки');
@@ -16,6 +17,7 @@
 		} else if (inputHashtags.validity.customError) {
 		inputHashtags.setCustomValidity(inputHashtags.validationMessage);
 		}	else {
+		inputHashtags.style.border = '2px solid white';
 	  inputHashtags.setCustomValidity('');
 		}
 	});
@@ -24,6 +26,7 @@
 	  var target = evt.target;
 	  var itemsMassiv = createMassivFromInputHashtags();
 	  var condition = createMirrorMassiveHashtags();
+	  inputHashtags.style.border = '2px solid red';
 	  for (var i = 0; i < itemsMassiv.length; i++) {  	
 	    if (itemsMassiv.length > 5) {
 		    target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
@@ -32,9 +35,20 @@
 		  } else if (condition === true) {
 	      target.setCustomValidity('Oдин и тот же хэш-тег не может быть использован дважды');
 	    }	else {
+	    	target.style.border = '2px solid white';
 		  	target.setCustomValidity('');
 		  }
 	  }
+	});
+
+	inputTextDescription.addEventListener('invalid', function (evt) {
+		inputTextDescription.style.border = '2px solid red';
+		if (inputTextDescription.validity.valueMissing) {
+			inputTextDescription.setCustomValidity('Обязательное поле');				
+		}	else {
+			inputTextDescription.style.border = '2px solid white';
+			inputTextDescription.setCustomValidity('');
+		}
 	});
 
 	var createMirrorMassiveHashtags = function () {

@@ -17,8 +17,7 @@
 		xhr.send();
 	};
 
-	window.postData = function (url, onLoad, onError) {
-		var formElement = document.querySelector('.img-upload__form');
+	window.postData = function (url, onLoad, onError, formElement) {
 
 		formElement.addEventListener('submit', function (evt) {
 			var oData = new FormData(formElement);
