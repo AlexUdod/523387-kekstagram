@@ -18,7 +18,6 @@
 	};
 
 	var onError = function (message) {
-		console.error(message);
 		var netError = errorTemplate.cloneNode(true);
 		netError.querySelector('.error__title').textContent = message;
 		mainContainer.appendChild(netError);
@@ -33,7 +32,7 @@
 		currentPostFormSubmit.addEventListener('click', function (evt) {
 			evt.preventDefault();
 			window.postData(POST__URL, onLoad, onError, currentPostForm);
-		})
+		});
 	};
 	sendForm();
 
@@ -43,8 +42,8 @@
 	};
 
 	var onBtnCloseErrorWindow = function () {
-		parent.addEventListener('click', function(e) {
-			 if(e.target && e.target.nodeName == 'BUTTON') {
+		parent.addEventListener('click', function (e) {
+			 if (e.target && e.target.nodeName === 'BUTTON') {
 			  closeErrorWindow();
 			}
 		});

@@ -23,8 +23,8 @@
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', url);
-		xhr.onload = function (oEvent) {
-			if (xhr.status == 200) {
+		xhr.onload = function () {
+			if (xhr.status === 200) {
 				onLoad(xhr.response);
 			} else {
 				onError(observeErrors(xhr));
@@ -36,7 +36,7 @@
 
 	var observeErrors = function (xhr) {
 		var error;
-		switch(xhr.status) {
+		switch (xhr.status) {
 			case 400:
 				error = 'Wrong request' + ' ' + xhr.status;
 				break;

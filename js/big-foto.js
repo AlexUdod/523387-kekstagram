@@ -50,7 +50,7 @@
 			bigFotoImg.src = imgUrl.src;
 			renderBigFoto(bigPhoto);
 			window.openComments(bigPhoto);
-		})
+		});
 	};
 
 	window.chooseSmallFotoForShowingBig = function (data) {

@@ -2,7 +2,7 @@
 
 (function () {
 	var MAX__NEW__PHOTOS = 10;
-	
+
 	var filterPopular = document.querySelector('#filter-popular');
 	var filterNew = document.querySelector('#filter-new');
 	var filterDiscussed = document.querySelector('#filter-discussed');
@@ -16,12 +16,13 @@
 	};
 
 	var removeActiveClass = function () {
-		imgFilterButtons.forEach(function(element) {
-			element.classList.remove('img-filters__button--active')});
+		imgFilterButtons.forEach(function (element) {
+			element.classList.remove('img-filters__button--active');
+		});
 	};
 
-	var shuffle = function(o){
-		for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	var shuffle = function (o) {
+		for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
 		return o;
 	};
 
