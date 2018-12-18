@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+	var ESC_KEYCODE = 27;
+
 	var inputHashtags = document.querySelector('.text__hashtags');
 	var inputTextDescription = document.querySelector('.text__description');
 
@@ -78,6 +80,7 @@
 
 	window.form = {
 		inputHashtags: inputHashtags,
-		inputTextDescription: inputTextDescription
+		inputTextDescription: inputTextDescription,
+		ESC_KEYCODE: ESC_KEYCODE 
 	};	
 })();

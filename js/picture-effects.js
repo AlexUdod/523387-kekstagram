@@ -37,7 +37,6 @@
 
 	chooseSmallPhotoEffects();
 
-// ВЫБОР ОТТЕНКОВ ПО ШКАЛЕ
 	sliderEffectPin.addEventListener('mousedown', function (evt) {
 	evt.preventDefault();
 
@@ -89,7 +88,6 @@
 		document.addEventListener('mouseup', onMouseUp);	
 	});
 
-// Пропорция количества оттенков на шкале
 	var calcScale = function() {
 		var point = 0;
 		var controlPoints = [];
@@ -105,7 +103,7 @@
 			window.form.inputTextDescription === document.activeElement) {
 			return;
 		} 
-		if (evt.keyCode === window.data.ESC_KEYCODE) {
+		if (evt.keyCode === window.form.ESC_KEYCODE) {
 			closeImgUploadWindow();
 		}
 	};

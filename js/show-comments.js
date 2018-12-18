@@ -36,4 +36,5 @@
     commentLoaderItem.addEventListener('click', addComments);
 
   };
+  
 })();

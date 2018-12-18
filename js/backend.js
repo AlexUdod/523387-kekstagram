@@ -19,22 +19,19 @@
 
 	window.postData = function (url, onLoad, onError, formElement) {
 
-		// formElement.addEventListener('submit', function (evt) {
-			var oData = new FormData(formElement);
+		var oData = new FormData(formElement);
 
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', url);
-			xhr.onload = function (oEvent) {
-				if (xhr.status == 200) {
-					onLoad(xhr.response);
-				} else {
-					onError(observeErrors(xhr));
-				}
-			};
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', url);
+		xhr.onload = function (oEvent) {
+			if (xhr.status == 200) {
+				onLoad(xhr.response);
+			} else {
+				onError(observeErrors(xhr));
+			}
+		};
 
-			xhr.send(oData);
-			// evt.preventDefault();
-		// });
+		xhr.send(oData);
 	};
 
 	var observeErrors = function (xhr) {
