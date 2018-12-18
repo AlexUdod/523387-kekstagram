@@ -11,17 +11,17 @@
     var changeableNumber = NUMBER;
 
     for (var i = 0; i < items.length; i++) {
-      items[i].style.display = "none";
+      items[i].style.display = 'none';
     }
 
     var addComments = function () {
       if (massivLength <= changeableNumber) {
         changeableNumber = massivLength;
       }
-      for (var i = 0; i < changeableNumber; i++) {
+      for (var j = 0; j < changeableNumber; j++) {
         commentLoaderItem.classList.remove('hidden');
         commentCountItem.textContent = new String(changeableNumber + ' из ' + massivLength);
-        items[i].style.display = "flex";
+        items[j].style.display = 'flex';
         if (massivLength <= changeableNumber) {
           commentLoaderItem.classList.add('hidden');
         }          
@@ -36,4 +36,5 @@
     commentLoaderItem.addEventListener('click', addComments);
 
   };
+
 })();

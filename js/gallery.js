@@ -7,8 +7,7 @@
 	var galleryContainer = document.querySelector('.pictures');
 	var imgFilters = document.querySelector('.img-filters');	
 
-	// создаем фото
-	window.renderFotos = function (foto) {
+	var renderFotos = function (foto) {
 		var fotoObject = differentFotoTemplate.cloneNode(true);
 		fotoObject.querySelector('.picture__img').src = foto.url;
 		fotoObject.querySelector('.picture__likes').textContent = foto.likes;
@@ -24,7 +23,5 @@
 		}
 		galleryContainer.appendChild(fragment);	
 	};
-
-
-
+	
 })();

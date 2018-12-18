@@ -1,10 +1,12 @@
 'use strict';
 
 (function () {
+	var ESC_KEYCODE = 27;
+
 	var inputHashtags = document.querySelector('.text__hashtags');
 	var inputTextDescription = document.querySelector('.text__description');
 
-	inputHashtags.addEventListener('invalid', function (evt) {
+	inputHashtags.addEventListener('invalid', function () {
 		inputHashtags.style.border = '2px solid red';
 	 	if (inputHashtags.validity.tooShort) {
 		inputHashtags.setCustomValidity('Хэш-тег должен состоять минимум из 2-х символов');
@@ -41,7 +43,7 @@
 	  }
 	});
 
-	inputTextDescription.addEventListener('invalid', function (evt) {
+	inputTextDescription.addEventListener('invalid', function () {
 		inputTextDescription.style.border = '2px solid red';
 		if (inputTextDescription.validity.valueMissing) {
 			inputTextDescription.setCustomValidity('Обязательное поле');				
@@ -78,6 +80,7 @@
 
 	window.form = {
 		inputHashtags: inputHashtags,
-		inputTextDescription: inputTextDescription
+		inputTextDescription: inputTextDescription,
+		ESC_KEYCODE: ESC_KEYCODE 
 	};	
 })();
