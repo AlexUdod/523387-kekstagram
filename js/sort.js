@@ -36,13 +36,13 @@
 		var dataCopy = data.slice();
 		filterPopular.addEventListener('click', function () {
 			clearPhotos();
-			window.debounce(window.createFotosGallery, data);			
+			window.debounce(window.createFotosGallery, data);
 		});
 
 		filterNew.addEventListener('click', function () {
 			clearPhotos();
 			var randomMassiv = shuffle(dataCopy).slice(0, MAX__NEW__PHOTOS);
-			window.debounce(window.createFotosGallery, randomMassiv);			
+			window.debounce(window.createFotosGallery, randomMassiv);
 		});
 
 		filterDiscussed.addEventListener('click', function () {
@@ -53,7 +53,7 @@
 			dataCopy.sort(function (a, b) {
 				if (a.comments.length < b.comments.length) {
 					return 1;
-				}	
+				}
 				if (a.comments.length > b.comments.length) {
 					return -1;
 				}

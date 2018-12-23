@@ -5,7 +5,7 @@
 	var MIN__SCALE__VALUE = 25;
 	var MAX__SCALE__VALUE = 100;
 	var FILTER__POINTS = 100;
-	var SCALE__PROCENT = 100
+	var SCALE__PROCENT = 100;
 
 	var onScaleControlSmaller = document.querySelector('.scale__control--smaller');
 	var onScaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -59,7 +59,7 @@
 			maxValue: 3,
 			measure: ''
 		}
-	];	
+	];
 
 	var minPinPosition = 0;
 	var maxPinPosition = parseInt(width, 10) - parseInt(marginLeft, 10) - parseInt(marginRight, 10);
@@ -83,7 +83,7 @@
 			} else {
 				effectsContainer.style.display = 'none';
 				bigFotoEffects.style.filter = 'none';
-			}			
+			}
 		});
 	};
 
@@ -114,7 +114,7 @@
 			};
 
 			onSliderEffectPin.style.left = (onSliderEffectPin.offsetLeft - shift.x) + 'px';
-			var currentPosition = (onSliderEffectPin.offsetLeft - shift.x);		
+			var currentPosition = (onSliderEffectPin.offsetLeft - shift.x);
 			scaleLine.style.width = currentPosition + 'px';
 
 			if (currentPosition < minPinPosition || currentPosition > maxPinPosition) {
@@ -131,8 +131,7 @@
 					if (currentValue === scalePoints[i]) {
 						sliderEffectValue.value = filterPoints[i];
 						if (bigFotoEffects.classList[1] !== fotoEffectsList[0].classList[1]) {
-							bigFotoEffects.style.filter = sliderEffectValue.name + '(' 
-						+ sliderEffectValue.value + sliderEffectValue.alt + ')';
+							bigFotoEffects.style.filter = sliderEffectValue.name + '(' + sliderEffectValue.value + sliderEffectValue.alt + ')';
 						}					
 						break;
 					}		
@@ -142,8 +141,8 @@
 			addBigFotoDeep();
 		};
 
-	  var onMouseUp = function (upEvt) {
-	  	upEvt.preventDefault();
+		var onMouseUp = function (upEvt) {
+			upEvt.preventDefault();
 			document.removeEventListener('mousemove', onMouseMove);
 			document.removeEventListener('mouseup', onMouseUp); 		
 		};

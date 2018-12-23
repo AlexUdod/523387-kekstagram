@@ -21,6 +21,6 @@
 		for (var i = 0; i < finalFotos.length; i++) {
 			fragment.appendChild(renderFotos(finalFotos[i]));
 		}
-		galleryContainer.appendChild(fragment);	
+		galleryContainer.appendChild(fragment);
 	};
 })();

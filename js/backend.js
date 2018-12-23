@@ -5,7 +5,7 @@
 
 	window.backend = {
 		loadData: function (url, onLoad, onError) {
-			var xhr = new XMLHttpRequest ();
+			var xhr = new XMLHttpRequest();
 			xhr.responseType = 'json';
 
 			xhr.addEventListener('load', function () {

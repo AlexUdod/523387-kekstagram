@@ -50,7 +50,7 @@
 			document.addEventListener('keydown', onEscCloseErrorWindow);
 			bigFotoImg.src = imgUrl.src;
 			renderBigFoto(bigPhoto);
-			window.openComments(bigPhoto);			
+			window.openComments(bigPhoto);
 		});
 	};
 

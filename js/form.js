@@ -25,18 +25,18 @@
 	});
 
 	onInputHashtags.addEventListener('input', function (evt) {
-	  var target = evt.target;
-	  var itemsMassiv = createMassivFromInputHashtags();
-	  var condition = createMirrorMassiveHashtags();
-	  onInputHashtags.style.border = '2px solid red';
-	  for (var i = 0; i < itemsMassiv.length; i++) {
-	  	if (itemsMassiv.length > 5) {
+		var target = evt.target;
+		var itemsMassiv = createMassivFromInputHashtags();
+		var condition = createMirrorMassiveHashtags();
+		onInputHashtags.style.border = '2px solid red';
+		for (var i = 0; i < itemsMassiv.length; i++) {
+			if (itemsMassiv.length > 5) {
 				target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
-		  } else if (itemsMassiv[i].length < 2 || itemsMassiv[i].length > 20) {
+			} else if (itemsMassiv[i].length < 2 || itemsMassiv[i].length > 20) {
 				target.setCustomValidity('Xеш-тег не может состоять только из одной решётки, максимальная длина одного хэш-тега 20 символов, включая решётку');
-		  } else if (condition === true) {
+			} else if (condition === true) {
 				target.setCustomValidity('Oдин и тот же хэш-тег не может быть использован дважды');
-	    }	else {
+			}	else {
 				target.style.border = '2px solid white';
 				target.setCustomValidity('');
 			}
@@ -46,10 +46,9 @@
 	onInputTextDescription.addEventListener('invalid', function () {
 		onInputTextDescription.style.border = '2px solid red';
 		if (onInputTextDescription.validity.valueMissing) {
-			onInputTextDescription.setCustomValidity('Обязательное поле');				
-		}	
-		else
-		{
+			onInputTextDescription.setCustomValidity('Обязательное поле');
+		}
+		else {
 			onInputTextDescription.style.border = '2px solid white';
 			onInputTextDescription.setCustomValidity('');
 		}
