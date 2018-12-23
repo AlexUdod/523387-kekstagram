@@ -26,20 +26,22 @@
 		return o;
 	};
 
+	var clearPhotos = function () {
+		removeActiveClass();
+		deleteFotos();
+		filterPopular.classList.add('img-filters__button--active');
+	};
+
 	window.receiveOnLoadData = function (data) {
 		var dataCopy = data.slice();
 		
 		filterPopular.addEventListener('click', function () {
-			removeActiveClass();
-			deleteFotos();
-			filterPopular.classList.add('img-filters__button--active');
+			clearPhotos();
 			window.debounce(window.createFotosGallery, data);			
 		});
 
 		filterNew.addEventListener('click', function () {
-			removeActiveClass();					
-			deleteFotos();
-			filterNew.classList.add('img-filters__button--active');
+			clearPhotos();
 			var randomMassiv = shuffle(dataCopy).slice(0, MAX__NEW__PHOTOS);
 			window.debounce(window.createFotosGallery, randomMassiv);			
 		});

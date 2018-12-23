@@ -1,37 +1,39 @@
 'use strict';
 
 (function () {
-	window.loadData = function (url, onLoad, onError) {
-		var xhr = new XMLHttpRequest ();
-		xhr.responseType = 'json';
+	var SUCCESS_REQUEST = 200;
 
-		xhr.addEventListener('load', function () {
-			if (xhr.status === 200) {
-				onLoad(xhr.response);
-			} else {
-			onError(observeErrors(xhr));
-			}
-		});
+	window.backend = {
+		loadData: function (url, onLoad, onError) {
+			var xhr = new XMLHttpRequest ();
+			xhr.responseType = 'json';
 
-		xhr.open('GET', url);
-		xhr.send();
-	};
-
-	window.postData = function (url, onLoad, onError, formElement) {
-
-		var oData = new FormData(formElement);
-
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', url);
-		xhr.onload = function () {
-			if (xhr.status === 200) {
-				onLoad(xhr.response);
-			} else {
+			xhr.addEventListener('load', function () {
+				if (xhr.status === SUCCESS_REQUEST) {
+					onLoad(xhr.response);
+				} else {
 				onError(observeErrors(xhr));
-			}
-		};
+				}
+			});
 
-		xhr.send(oData);
+			xhr.open('GET', url);
+			xhr.send();
+		},
+
+		postData: function (url, onLoad, onError, formElement) {
+			var oData = new FormData(formElement);
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', url);
+			xhr.onload = function () {
+				if (xhr.status === SUCCESS_REQUEST) {
+					onLoad(xhr.response);
+				} else {
+					onError(observeErrors(xhr));
+				}
+			};
+
+			xhr.send(oData);
+		}
 	};
 
 	var observeErrors = function (xhr) {
@@ -54,5 +56,6 @@
 		}
 		return error;
 	};
+
 
 })();

@@ -8,8 +8,7 @@
 	var errorTemplate = document.querySelector('#error')
 		.content
 		.querySelector('.error');
-	var currentPostForm = document.querySelector('.img-upload__form');
-	var currentPostFormSubmit = document.querySelector('.img-upload__submit');
+	var onCurrentPostForm = document.querySelector('.img-upload__form');
 
 	var onLoad = function (data) {
 		window.createFotosGallery(data);
@@ -28,13 +27,14 @@
 		onBodyCloseErrorWindow();
 	};
 
-	var sendForm = function () {
-		currentPostFormSubmit.addEventListener('click', function (evt) {
+	var callFormData = function () {
+		onCurrentPostForm.addEventListener('submit', function (evt) {
+			window.form.sendForm();
+			window.backend.postData(POST__URL, onLoad, onError, onCurrentPostForm);
 			evt.preventDefault();
-			window.postData(POST__URL, onLoad, onError, currentPostForm);
 		});
 	};
-	sendForm();
+	callFormData();
 
 	var closeErrorWindow = function () {
 		var errorWindow = document.querySelector('.error');
@@ -60,6 +60,6 @@
 		}
 	};
 
-	window.loadData(GET__URL, onLoad, onError);
+	window.backend.loadData(GET__URL, onLoad, onError);
 
 })();

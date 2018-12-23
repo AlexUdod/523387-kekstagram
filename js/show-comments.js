@@ -1,14 +1,14 @@
 'use strict';
 (function () {
   window.openComments = function (data) {
-    var NUMBER = 5;
+    var COMMENTS__STEP = 5;
 
     var items = document.querySelectorAll('.social__comment');
     var commentCountItem = document.querySelector('.social__comment-count');
-    var commentLoaderItem = document.querySelector('.comments-loader');
+    var onCommentLoaderItem = document.querySelector('.comments-loader');
 
     var massivLength = data.comments.length;
-    var changeableNumber = NUMBER;
+    var changeableNumber = COMMENTS__STEP;
 
     for (var i = 0; i < items.length; i++) {
       items[i].style.display = 'none';
@@ -19,11 +19,11 @@
         changeableNumber = massivLength;
       }
       for (var j = 0; j < changeableNumber; j++) {
-        commentLoaderItem.classList.remove('hidden');
+        onCommentLoaderItem.classList.remove('hidden');
         commentCountItem.textContent = new String(changeableNumber + ' из ' + massivLength);
         items[j].style.display = 'flex';
         if (massivLength <= changeableNumber) {
-          commentLoaderItem.classList.add('hidden');
+          onCommentLoaderItem.classList.add('hidden');
         }          
       }
       changeableNumber += changeableNumber;
@@ -33,7 +33,7 @@
     };    
     addComments();
 
-    commentLoaderItem.addEventListener('click', addComments);
+    onCommentLoaderItem.addEventListener('click', addComments);
 
   };
 

@@ -11,7 +11,7 @@
 		var fotoObject = differentFotoTemplate.cloneNode(true);
 		fotoObject.querySelector('.picture__img').src = foto.url;
 		fotoObject.querySelector('.picture__likes').textContent = foto.likes;
-		fotoObject.querySelector('.picture__comments').textContent = foto.comments;
+		fotoObject.querySelector('.picture__comments').textContent = foto.comments.length;
 		return fotoObject;
 	};
 
