@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-	var imgFilters = document.querySelector('.img-filters');
 	var imgUploadInput = document.querySelector('.img-upload__input');
 	var imgUploadOverlay = document.querySelector('.img-upload__overlay');
 	var imgUploadCancel = document.querySelector('.img-upload__cancel');
@@ -38,7 +37,6 @@
 
 	chooseSmallPhotoEffects();
 
-// ВЫБОР ОТТЕНКОВ ПО ШКАЛЕ
 	sliderEffectPin.addEventListener('mousedown', function (evt) {
 	evt.preventDefault();
 
@@ -90,7 +88,6 @@
 		document.addEventListener('mouseup', onMouseUp);	
 	});
 
-// Пропорция количества оттенков на шкале
 	var calcScale = function() {
 		var point = 0;
 		var controlPoints = [];
@@ -106,13 +103,12 @@
 			window.form.inputTextDescription === document.activeElement) {
 			return;
 		} 
-		if (evt.keyCode === window.data.ESC_KEYCODE) {
+		if (evt.keyCode === window.form.ESC_KEYCODE) {
 			closeImgUploadWindow();
 		}
 	};
 
 	var summonImgFiltersForm = function () {
-		imgFilters.classList.remove('img-filters--inactive');
 		imgUploadOverlay.classList.remove('hidden');
 		document.addEventListener('keydown', onPopupEscPress);
 	};
