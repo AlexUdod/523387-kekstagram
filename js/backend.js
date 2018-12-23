@@ -15,7 +15,6 @@
 				onError(observeErrors(xhr));
 				}
 			});
-
 			xhr.open('GET', url);
 			xhr.send();
 		},
@@ -31,7 +30,6 @@
 					onError(observeErrors(xhr));
 				}
 			};
-
 			xhr.send(oData);
 		}
 	};

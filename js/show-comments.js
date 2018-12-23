@@ -24,13 +24,13 @@
         items[j].style.display = 'flex';
         if (massivLength <= changeableNumber) {
           onCommentLoaderItem.classList.add('hidden');
-        }          
+        }
       }
       changeableNumber += changeableNumber;
       if (massivLength < changeableNumber) {
         changeableNumber = massivLength;
       }
-    };    
+    };
     addComments();
 
     onCommentLoaderItem.addEventListener('click', addComments);

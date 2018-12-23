@@ -23,7 +23,7 @@
 	var deleteComments = function () {
 		var element = document.querySelector('.social__comments');
 		while (element.firstChild) {
-	  element.removeChild(element.firstChild);
+		element.removeChild(element.firstChild);
 		}
 	};
 
@@ -34,10 +34,9 @@
 	var renderBigFoto = function (bigFoto) {
 		var bigFototObject = bigFotoContainer;
 		deleteComments();
-		for (var i = 0; i < bigFoto.comments.length; i++) {				
+		for (var i = 0; i < bigFoto.comments.length; i++)	{
 			socialCommentItem.querySelector('.social__picture').src = bigFoto.comments[i].avatar;
-			socialCommentItem.querySelector('.social__text').textContent =
-			 bigFoto.comments[i].message + '  ' + bigFoto.comments[i].name;
+			socialCommentItem.querySelector('.social__text').textContent = bigFoto.comments[i].message + '  ' + bigFoto.comments[i].name;
 			socialCommentsContainer.appendChild(socialCommentItem.cloneNode(true));
 		}
 		bigFototObject.querySelector('.likes-count').textContent = bigFoto.likes;

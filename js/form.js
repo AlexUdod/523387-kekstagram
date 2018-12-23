@@ -8,7 +8,7 @@
 
 	onInputHashtags.addEventListener('invalid', function () {
 		onInputHashtags.style.border = '2px solid red';
-	 	if (onInputHashtags.validity.tooShort) {
+		if (onInputHashtags.validity.tooShort) {
 		onInputHashtags.setCustomValidity('Хэш-тег должен состоять минимум из 2-х символов');
 		}	else if (onInputHashtags.validity.patternMismatch) {
 		onInputHashtags.setCustomValidity('Хэш-тег начинается с символа # (решётка) и разделяються пробелами, xеш-тег не может состоять только из одной решётки');
@@ -20,8 +20,7 @@
 		onInputHashtags.setCustomValidity(onInputHashtags.validationMessage);
 		}	else {
 		onInputHashtags.style.border = '2px solid white';
-	  onInputHashtags.setCustomValidity('');
-	  
+		onInputHashtags.setCustomValidity('');
 		}
 	});
 
@@ -30,25 +29,27 @@
 	  var itemsMassiv = createMassivFromInputHashtags();
 	  var condition = createMirrorMassiveHashtags();
 	  onInputHashtags.style.border = '2px solid red';
-	  for (var i = 0; i < itemsMassiv.length; i++) {  	
-	    if (itemsMassiv.length > 5) {
-		    target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
+	  for (var i = 0; i < itemsMassiv.length; i++) {
+	  	if (itemsMassiv.length > 5) {
+				target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
 		  } else if (itemsMassiv[i].length < 2 || itemsMassiv[i].length > 20) {
-		  	target.setCustomValidity('Xеш-тег не может состоять только из одной решётки, максимальная длина одного хэш-тега 20 символов, включая решётку');
+				target.setCustomValidity('Xеш-тег не может состоять только из одной решётки, максимальная длина одного хэш-тега 20 символов, включая решётку');
 		  } else if (condition === true) {
-	      target.setCustomValidity('Oдин и тот же хэш-тег не может быть использован дважды');
+				target.setCustomValidity('Oдин и тот же хэш-тег не может быть использован дважды');
 	    }	else {
-	    	target.style.border = '2px solid white';
-		  	target.setCustomValidity('');
-		  }
-	  }
+				target.style.border = '2px solid white';
+				target.setCustomValidity('');
+			}
+		}
 	});
 
 	onInputTextDescription.addEventListener('invalid', function () {
 		onInputTextDescription.style.border = '2px solid red';
 		if (onInputTextDescription.validity.valueMissing) {
 			onInputTextDescription.setCustomValidity('Обязательное поле');				
-		}	else {
+		}	
+		else
+		{
 			onInputTextDescription.style.border = '2px solid white';
 			onInputTextDescription.setCustomValidity('');
 		}

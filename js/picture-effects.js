@@ -5,6 +5,7 @@
 	var MIN__SCALE__VALUE = 25;
 	var MAX__SCALE__VALUE = 100;
 	var FILTER__POINTS = 100;
+	var SCALE__PROCENT = 100
 
 	var onScaleControlSmaller = document.querySelector('.scale__control--smaller');
 	var onScaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -44,19 +45,19 @@
 			name: 'invert',
 			minValue: 0,
 			maxValue: 100,
-			measure:	'%'			
+			measure: '%'
 		},
 		{
 			name: 'blur',
 			minValue: 0,
 			maxValue: 3,
-			measure:	'px'	
+			measure: 'px'
 		},
 		{
 			name: 'brightness',
 			minValue: 1,
 			maxValue: 3,
-			measure: ''			
+			measure: ''
 		}
 	];	
 
@@ -75,12 +76,6 @@
 
 			if (bigFotoEffects.classList[1] !== fotoEffectsList[0].classList[1]) {
 				bigFotoEffects.style.filter = filter.name + '(' + filter.maxValue + ')';
-				var object = {
-					minValue: filter.minValue,
-					maxValue: filter.maxValue,
-					filterName: filter.name,
-					filterMeasure: filter.measure
-				};
 				sliderEffectValue.min = filter.minValue;
 				sliderEffectValue.max = filter.maxValue;
 				sliderEffectValue.name = filter.name;
@@ -94,14 +89,14 @@
 
 	var chooseSmallPhotoEffects = function () {
 		for (var i = 0; i < fotoEffectsList.length; i++) {
-			addBigFotoEffects(fotoEffectsList[i], filtersList[i - 1]);	
+			addBigFotoEffects(fotoEffectsList[i], filtersList[i - 1]);
 		}
 	};
 
 	chooseSmallPhotoEffects();
 
 	onSliderEffectPin.addEventListener('mousedown', function (evt) {
-	evt.preventDefault();
+		evt.preventDefault();
 
 		var startCoords = {
 			x: evt.clietX,
@@ -145,30 +140,28 @@
 				sliderEffectValue.value = currentValue;
 			};
 			addBigFotoDeep();
-
-	  };
+		};
 
 	  var onMouseUp = function (upEvt) {
 	  	upEvt.preventDefault();
 			document.removeEventListener('mousemove', onMouseMove);
 			document.removeEventListener('mouseup', onMouseUp); 		
-	  };
-
-		document.addEventListener('mousemove', onMouseMove);
-		document.addEventListener('mouseup', onMouseUp);	
+		};
+	  document.addEventListener('mousemove', onMouseMove);
+		document.addEventListener('mouseup', onMouseUp);
 	});
 
 	var countDeepParametrs = function (min, max) {
 		var minValue = min;
 		var filterPoints = [];
 		for (var i = 0; i < FILTER__POINTS; i++) {
-			min += (max - minValue)  / FILTER__POINTS;
+			min += (max - minValue) / FILTER__POINTS;
 			filterPoints[i] = min;
 		}
 		return filterPoints;
 	};
 
-	var calcScale = function() {
+	var calcScale = function () {
 		var point = 0;
 		var controlPoints = [];
 		for (var i = 0; i < FILTER__POINTS; i++) {
@@ -191,7 +184,7 @@
 	var summonImgFiltersForm = function () {
 		imgUploadOverlay.classList.remove('hidden');
 		scaleControlValue.value = MAX__SCALE__VALUE + '%';
-		bigFotoEffects.style.transform = 'scale(' + MAX__SCALE__VALUE/100 + ')';
+		bigFotoEffects.style.transform = 'scale(' + MAX__SCALE__VALUE / SCALE__PROCENT + ')';
 		document.addEventListener('keydown', onPopupEscPress);
 	};
 
@@ -205,7 +198,7 @@
 
 	var changeValue = function (data) {
 		scaleControlValue.value = data + '%';
-		bigFotoEffects.style.transform = 'scale(' + data/100 + ')';
+		bigFotoEffects.style.transform = 'scale(' + data / SCALE__PROCENT + ')';
 	};
 
 	var verifyPictureSize = function (data) {

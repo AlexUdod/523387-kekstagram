@@ -11,7 +11,7 @@
 	var deleteFotos = function () {
 		var elements = document.getElementsByClassName('picture');
 		while (elements[0]) {
-  		elements[0].parentNode.removeChild(elements[0]);
+			elements[0].parentNode.removeChild(elements[0]);
 		}
 	};
 
@@ -34,7 +34,6 @@
 
 	window.receiveOnLoadData = function (data) {
 		var dataCopy = data.slice();
-		
 		filterPopular.addEventListener('click', function () {
 			clearPhotos();
 			window.debounce(window.createFotosGallery, data);			

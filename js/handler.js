@@ -38,13 +38,13 @@
 
 	var closeErrorWindow = function () {
 		var errorWindow = document.querySelector('.error');
-		errorWindow.style.display = 'none';	
+		errorWindow.style.display = 'none';
 	};
 
 	var onBtnCloseErrorWindow = function () {
 		parent.addEventListener('click', function (e) {
-			 if (e.target && e.target.nodeName === 'BUTTON') {
-			  closeErrorWindow();
+			if (e.target && e.target.nodeName === 'BUTTON') {
+				closeErrorWindow();
 			}
 		});
 	};

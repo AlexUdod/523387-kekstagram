@@ -5,7 +5,6 @@
 
 	var lastTimeout;
 	window.debounce = function (cb, data) {
-	
 		var getData = function () {
 			cb(data);
 			window.chooseSmallFotoForShowingBig(data);
