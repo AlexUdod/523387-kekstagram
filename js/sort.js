@@ -62,4 +62,5 @@
 			window.debounce(window.createFotosGallery, dataCopy);			
 		});
 	};
+	
 })();
