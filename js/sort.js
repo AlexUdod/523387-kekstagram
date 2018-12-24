@@ -11,13 +11,7 @@
 	var deleteFotos = function () {
 		var elements = document.getElementsByClassName('picture');
 		while (elements[0]) {
-<<<<<<< HEAD
 			elements[0].parentNode.removeChild(elements[0]);
-=======
-
-			elements[0].parentNode.removeChild(elements[0]);
-
->>>>>>> 76f7b207a0d4da2ead68e4c3efabb98b69a53a2d
 		}
 	};
 
@@ -32,10 +26,6 @@
 		return o;
 	};
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 76f7b207a0d4da2ead68e4c3efabb98b69a53a2d
 	var clearPhotos = function () {
 		removeActiveClass();
 		deleteFotos();
@@ -53,46 +43,15 @@
 			clearPhotos();
 			var randomMassiv = shuffle(dataCopy).slice(0, MAX__NEW__PHOTOS);
 			window.debounce(window.createFotosGallery, randomMassiv);
-<<<<<<< HEAD
-=======
-
-	window.receiveOnLoadData = function (data) {
-		var dataCopy = data.slice();
-		
-		filterPopular.addEventListener('click', function () {
-			removeActiveClass();
-			deleteFotos();
-			filterPopular.classList.add('img-filters__button--active');
-			window.debounce(window.createFotosGallery, data);			
-		});
-
-		filterNew.addEventListener('click', function () {
-			removeActiveClass();					
-			deleteFotos();
-			filterNew.classList.add('img-filters__button--active');
-			var randomMassiv = shuffle(dataCopy).slice(0, MAX__NEW__PHOTOS);
-			window.debounce(window.createFotosGallery, randomMassiv);			
-
->>>>>>> 76f7b207a0d4da2ead68e4c3efabb98b69a53a2d
 		});
 
 		filterDiscussed.addEventListener('click', function () {
-			removeActiveClass();
-			deleteFotos();
-			filterDiscussed.classList.add('img-filters__button--active');
+			clearPhotos();
 
 			dataCopy.sort(function (a, b) {
 				if (a.comments.length < b.comments.length) {
 					return 1;
-<<<<<<< HEAD
 				}
-=======
-
-				}
-
-				}	
-
->>>>>>> 76f7b207a0d4da2ead68e4c3efabb98b69a53a2d
 				if (a.comments.length > b.comments.length) {
 					return -1;
 				}
@@ -101,12 +60,5 @@
 			window.debounce(window.createFotosGallery, dataCopy);			
 		});
 	};
-<<<<<<< HEAD
-	
-=======
 
-
-
-
->>>>>>> 76f7b207a0d4da2ead68e4c3efabb98b69a53a2d
 })();
